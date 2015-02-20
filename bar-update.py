@@ -31,18 +31,18 @@ songPlayed = fields["songPlayed"]
 
 if event == "songstart" or event == "songexplain":
 	sendRequest(url, "SetSongInfo", buildJSON(title, artist, album, coverArt, rating, detailUrl))
-elif event == "songfinish":
-	import feedparser
-	feed = feedparser.parse("http://www.npr.org/rss/podcast.php?id=500005")
-	if not os.path.lexists(www + "lastNews"): open(www + "lastNews", "w").write("-1")
-	lastNews = int(open(www + "lastNews", "r").read())
-	currNews = feed.entries[0].updated_parsed.tm_hour
-	currHour = int(strftime("%H", gmtime()))
-	currMin = int(strftime("%M", gmtime()))
-	if currNews != lastNews and currNews == currHour:
-		open(www + "lastNews", "w").write(str(feed.entries[0].updated_parsed.tm_hour))
-		sendRequest(url, "SetSongInfo", buildJSON(feed.entries[0].title, feed.feed.title, feed.feed.title, "http://media.npr.org/images/podcasts/2013/primary/hourly_news_summary.png", 0, None))
-		process(["mpg123", feed.entries[0].id])
+#elif event == "songfinish":
+#	import feedparser
+#	feed = feedparser.parse("http://www.npr.org/rss/podcast.php?id=500005")
+#	if not os.path.lexists(www + "lastNews"): open(www + "lastNews", "w").write("-1")
+#	lastNews = int(open(www + "lastNews", "r").read())
+#	currNews = feed.entries[0].updated_parsed.tm_hour
+#	currHour = int(strftime("%H", gmtime()))
+#	currMin = int(strftime("%M", gmtime()))
+#	if currNews != lastNews and currNews == currHour:
+#		open(www + "lastNews", "w").write(str(feed.entries[0].updated_parsed.tm_hour))
+#		sendRequest(url, "SetSongInfo", buildJSON(feed.entries[0].title, feed.feed.title, feed.feed.title, "http://media.npr.org/images/podcasts/2013/primary/hourly_news_summary.png", 0, None))
+#		process(["mpg123", feed.entries[0].id])
 elif event == "songlove":
 	sendRequest(url, "SetSongInfo", buildJSON(title, artist, album, coverArt, rating, detailUrl))
 elif event == "usergetstations" or event == "stationcreate" or event == "stationdelete" or event == "stationrename":				# Code thanks to @officerNordBerg on GitHub
