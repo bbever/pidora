@@ -6,7 +6,7 @@ class Pidora():
 	data = dict(pianobar=None, songData=None)
 	
 	#Comment the line below to cancel autostart
-	data['pianobar'] = pidora.process(['pianobar'], True)
+	data['pianobar'] = pidora.process(['/home/pi/pianobar/pianobar'], True)
 
 	@cherrypy.expose
 	def index(self):
